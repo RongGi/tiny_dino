@@ -72,12 +72,16 @@ module tt_um_RongGi_tiny_dino(
   assign G = video_active ? ground ? {2'b10}: block ? 2'b10 : obstracle ? 2'b10: is_day ? day_color :day_color ^ 2'b11 : 2'b00;
   assign B = video_active ? ground ? {2'b10}: block ? 2'b00 : obstracle ? 2'b10: is_day ? day_color :day_color ^ 2'b11 : 2'b00;
   
-  always @(posedge ui_in[0], negedge rst_n) begin
+  always @(posedge vsync, negedge rst_n) begin
     if (~rst_n) begin
       jump <= 1'b0;
-    end else begin
+    end else if (ui_in[0] & ~jump) begin
       jump <= 1'b1;
       jump_counter <= 5'b11111;
+    end else if (jump_counter > 5'b00000) begin
+      jump_counter <= jump_counter - 1;
+    end else if (jump_counter == 5'b00000)begin
+      jump <= 1'b0;
     end
   end
   always @(posedge clk) begin
@@ -109,11 +113,6 @@ module tt_um_RongGi_tiny_dino(
     end else begin
       day_counter <= day_counter - 2;
       obstracle_counter <= obstracle_counter - 4;
-    end
-    if (jump_counter > 5'b00000) begin 
-      jump_counter <= jump_counter - 1;
-    end else begin
-      jump <= 1'b0;
     end
   end
 
