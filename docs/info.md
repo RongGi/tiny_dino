@@ -9,12 +9,13 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+using vga color scheme to build a oversimplified Dino game
 
 ## How to test
 
-Explain how to use your project
+connect a button to pin 0 and vga to output and let the block jump over the obstracle
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+Display, same as template (vga commection)
+Button with power source
