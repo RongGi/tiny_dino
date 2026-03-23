@@ -57,7 +57,7 @@ module tt_um_RongGi_tiny_dino(
   reg block;
   reg obstracle;
 
-  localparam [15:0] dino[15:0] = '{
+  localparam [15:0] dino[0:15] = '{
       16'b0000000001111110,
       16'b0000000011011111,
       16'b0000000011111111,
@@ -75,7 +75,7 @@ module tt_um_RongGi_tiny_dino(
       16'b0000100010000000,
       16'b0000110011000000
   };
-  localparam [15:0] cactus[15:0] = '{
+  localparam [15:0] cactus[0:15] = '{
       16'b0000000110000000,
       16'b0000001110000000,
       16'b0000001111000000,
@@ -172,12 +172,12 @@ module tt_um_RongGi_tiny_dino(
     end else begin
       is_day <= 0;
     end
-    if (pix_x[9:5]==5'b00010 & (9'b100100000+{3'b000,dino_sub_height_q}) < pix_y[8:0] & pix_y[8:0]<(9'b101000001+{3'b000,dino_sub_height_q}) & dino[dino_sub_height_q[4:1]-pix_y[4:1]][15-pix_x[4:1]]) begin
+    if (pix_x[9:5]==5'b00010 & (9'b100100000+{3'b000,dino_sub_height_q}) < pix_y[8:0] & pix_y[8:0]<(9'b101000001+{3'b000,dino_sub_height_q}) & dino[pix_y[4:1]-dino_sub_height_q[4:1]-1][15-pix_x[4:1]]) begin
       block <= 1;
     end else begin
       block <= 0;
     end
-    if ((pix_y[8:5]==4'b1011) & (pix_x<obstracle_counter) & (pix_x>(obstracle_counter-10'b00_0100_0000)) & (cactus[15-pix_y[4:1]][obstracle_counter[4:1]-pix_x[4:1]])) begin
+    if ((pix_y[8:5]==4'b1011) & (pix_x<obstracle_counter) & (pix_x>(obstracle_counter-10'b00_0100_0000)) & (cactus[pix_y[4:1]][obstracle_counter[4:1]-pix_x[4:1]])) begin
       obstracle <= 1;
     end else begin
       obstracle <= 0;
